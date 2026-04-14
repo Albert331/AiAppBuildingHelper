@@ -9,7 +9,7 @@ const connectDB = async()=>{
     try{
         const conn = await db.connect(process.env.MONGO_URL)
         console.log('connected to the database ready to extract data', conn.connection.host)
-    }catch{err}{
+    }catch(err){
         console.log(err)
         process.exit(1)
 

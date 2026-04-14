@@ -9,7 +9,7 @@ const getProjects = async (req,res) =>{
 }
 
 const addProjects =async (req,res)=>{
-    if(!req.body){
+    if(!req.body.projectName){
         res.status(400)
         throw new Error('please gimme some info')
     }
@@ -43,7 +43,7 @@ const updateProjects =async (req,res)=>{
         throw new Error('not allowed mate')
     }
 
-    const updated = await project.findByIdAndUpdate(req.params.id,req.body,{new:true})
+    const updated = await project.findByIdAndUpdate(req.params.id,req.body,{ returnDocument: 'after' } )
     res.status(200).json(updated)
 
 }

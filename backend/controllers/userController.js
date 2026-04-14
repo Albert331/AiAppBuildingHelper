@@ -1,6 +1,6 @@
 const user = require('../models/userModel')
 const jwt = require('jsonwebtoken')
-const bcrypt = require('bcryptjs')
+const bcrypt = require('bcrypt')
 
 const registerUser = async (req,res) =>{
     const {name,email,password} = req.body
@@ -9,15 +9,15 @@ const registerUser = async (req,res) =>{
         res.status(400)
         throw new Error('please add all fields')
     }
-    const userExists = await user.finOne({email})
+    const userExists = await user.findOne({email})
 
     if(userExists){
         res.status(400)
         throw new Error("already account haia bhaiya")
     }
 
-    const salt = bcrypt.genSalt(10)
-    const hashedPass = bcrypt.hash(password,salt)
+    const salt = await bcrypt.genSalt(10)
+    const hashedPass = await bcrypt.hash(password,salt)
 
     const userdone= await user.create({
         name,
@@ -79,4 +79,10 @@ const generateToken = (id) =>{
     return jwt.sign({id},process.env.SECRET,{
         expiresIn:'10d'
     })
+}
+
+module.exports = {
+    registerUser,
+    loginUser,
+    getUserData
 }
