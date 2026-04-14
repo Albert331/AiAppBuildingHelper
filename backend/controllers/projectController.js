@@ -121,7 +121,7 @@ const generateProjectStages = async(req,res) => {
     }catch(err){
         console.error("AI Generation Error:", error.message);
         
-        // Ensure we send a response so Postman doesn't hang on error
+        
         return res.status(error.response?.status || 500).json({
             message: "Failed to generate stages",
             error: error.message
